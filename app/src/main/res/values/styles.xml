@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Splash" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowBackground">@mipmap/ic_launcher</item>
+    </style>
 </resources>
