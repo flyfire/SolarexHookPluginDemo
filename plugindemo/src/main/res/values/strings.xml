@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">plugindemo</string>
+    <string name="demo_two_text">鸣人</string>
+    <string name="demo_three_text">卡卡西</string>
 </resources>
