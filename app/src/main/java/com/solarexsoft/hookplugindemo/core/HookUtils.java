@@ -3,6 +3,7 @@ package com.solarexsoft.hookplugindemo.core;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.util.ArrayMap;
 
 import java.io.File;
@@ -46,6 +47,34 @@ public class HookUtils {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void hookHandler(Context context) {
+        Class<?> activityThreadClz = null;
+        try {
+            activityThreadClz = Class.forName("android.app.ActivityThread");
+            Method currentActivityThreadMethod = activityThreadClz.getDeclaredMethod("currentActivityThread");
+            currentActivityThreadMethod.setAccessible(true);
+            Object activityThread = currentActivityThreadMethod.invoke(null);
+
+            Field mHField = activityThreadClz.getDeclaredField("mH");
+            mHField.setAccessible(true);
+            Handler mH = (Handler) mHField.get(activityThread);
+            Field mCallbackField = Handler.class.getDeclaredField("mCallback");
+            mCallbackField.setAccessible(true);
+            mCallbackField.set(mH, new InterceptHandlerCallback(mH, context));
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static void hookPackageInfo() {
