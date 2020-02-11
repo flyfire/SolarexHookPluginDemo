@@ -31,6 +31,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViewById(R.id.btn_submit).setOnClickListener(this);
+        et_name = findViewById(R.id.et_name);
+        et_password = findViewById(R.id.et_password);
         originIntent = getIntent().getParcelableExtra(HookConstants.KEY_ORIGIN_INTENT);
     }
 
