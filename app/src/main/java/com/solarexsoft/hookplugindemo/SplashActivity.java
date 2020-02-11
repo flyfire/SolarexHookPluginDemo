@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,6 +48,12 @@ public class SplashActivity extends Activity {
     private void doNext() {
         String apkPath = new File(Environment.getExternalStorageDirectory(), "plugin.apk").getAbsolutePath();
         HookUtils.hookLoadedApk(this, apkPath);
-        startActivity(new Intent(this, MainActivity.class));
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
+            }
+        }, 1000);
     }
 }
