@@ -2,6 +2,7 @@ package com.solarexsoft.hookplugindemo.core;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Handler;
 import android.os.Message;
 
@@ -51,6 +52,11 @@ public class InterceptHandlerCallback implements Handler.Callback {
                 boolean login = context.getSharedPreferences(HookConstants.SP_FILENAME, Context.MODE_PRIVATE).getBoolean(HookConstants.KEY_LOGIN_ALREADY, false);
                 if (login) {
                     intentField.set(activityClientRecordObj, originIntent);
+                    Field activityInfoField = activityClientRecordObj.getClass().getDeclaredField("activityInfo");
+                    activityInfoField.setAccessible(true);
+                    ActivityInfo activityInfo = (ActivityInfo) activityInfoField.get(activityClientRecordObj);
+                    activityInfo.applicationInfo.packageName = originIntent.getPackage() == null ? originIntent.getComponent().getPackageName() : originIntent.getPackage();
+
                 } else {
                     Intent loginIntent = new Intent(context, LoginActivity.class);
                     loginIntent.putExtra(HookConstants.KEY_ORIGIN_INTENT, originIntent);
