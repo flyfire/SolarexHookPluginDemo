@@ -29,8 +29,6 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HookUtils.hookStartActivity(this);
-        HookUtils.hookHandler(this);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             doNext();
         } else {
@@ -46,6 +44,8 @@ public class SplashActivity extends Activity {
     }
 
     private void doNext() {
+        HookUtils.hookStartActivity(this);
+        HookUtils.hookHandler(this);
         String apkPath = new File(Environment.getExternalStorageDirectory(), "plugin.apk").getAbsolutePath();
         HookUtils.hookLoadedApk(this, apkPath);
         new Handler().postDelayed(new Runnable() {
