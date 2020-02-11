@@ -10,4 +10,6 @@ package com.solarexsoft.hookplugindemo.core;
 
 public class HookConstants {
     public static final String KEY_ORIGIN_INTENT = "key_origin_intent";
+    public static final String KEY_LOGIN_ALREADY = "key_login_already";
+    public static final String SP_FILENAME = "solarex";
 }
