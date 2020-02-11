@@ -56,7 +56,7 @@ public class InterceptHandlerCallback implements Handler.Callback {
                     activityInfoField.setAccessible(true);
                     ActivityInfo activityInfo = (ActivityInfo) activityInfoField.get(activityClientRecordObj);
                     activityInfo.applicationInfo.packageName = originIntent.getPackage() == null ? originIntent.getComponent().getPackageName() : originIntent.getPackage();
-
+                    HookUtils.hookPackageInfo();
                 } else {
                     Intent loginIntent = new Intent(context, LoginActivity.class);
                     loginIntent.putExtra(HookConstants.KEY_ORIGIN_INTENT, originIntent);
